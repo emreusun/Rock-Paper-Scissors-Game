@@ -1,10 +1,11 @@
-# Emra Usun's Virtual Rock Paper Scissors Game!
+# Emre Usun's Virtual Rock Paper Scissors Game!
 
 A virtual version of rock paper scissors! Two players compete by choosing an option and comparing their choices. The game is win, lose, or draw - the loser loses a life. Keep playing until one player has no lives left to live.
 ## Project Roadmap File
 [Project roadmap Google Doc link](https://docs.google.com/document/d/1KbR-FQn368d-V6shG-3zgIIK91LiryClTD0lKikO2m8/edit?usp=sharing)
 
 ##MIT License
+
 
 Copyright (c) 2021 Emre Usun
 
