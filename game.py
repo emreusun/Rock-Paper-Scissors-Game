@@ -1,50 +1,46 @@
 # Import packages to extend Python (just like we extend Sublime, Atom, or VSCode)
 from random import randint 
+# re-import our game variables
+from gameComponents import gameVars
 
 # [] => this is an array
 # name = [value1, value2, value3]
 # an array is a special type of container that can hold mutiple items.
 # arrays are indexed (their contents are assigned a number)
 # the index always starts at 0
-choices =["rock", "paper", "scissors"]
 
-player_lives = 2
-computer_lives = 2
-total_lives = 2
 
-# True or False are Boolean data types
-# essentially, booleans are equivalent to an on or off switch, 1 or 0. 
-player_choice = False
-
-#define a wind or lose function
+#define a win or lose function and refer to it in our game loop
 def winorlose(status):
-	#version 1 of function
-    # print("Inside winorlose function; status is: ", status)
-    print("You", status, "! Would you like to play again?")
-    choice = input("Y / N? ")
-
-    if choice == "N" or choice == "n":
-        print("You chose to quit! Better luck next time!")
-        exit()
-    elif choice == "Y" or choice == "y":
-	#reset the player lives and computer lives
-	#and reset player choice to False, so our loop restarts
-        global player_lives
-        global computer_lives
-        global total_lives
-
-        player_lives = total_lives
-        computer_lives = total_lives
+    if status == "won":
+    	pre_message = "You are the huugest winner ever! "
     else:
-        print("Make a valid choice - Y or N")
-	#this might generate a bug that we need to fix later
-        choice = input("Y / N? ")
+        pre_message = "You done trumpet it, loser!"
+    print(pre_message + "Would you like to play again?")   
+    
+    choice = False
+
+    while choice == False:
+        choice = input("Y / N? ") 
+
+        if choice == "Y" or choice == "y":
+        	#reset the game loop and start over again       	
+        	gameVars.player_lives = gameVars.total_lives
+        	gameVars.computer_lives = gameVars.total_lives
+        elif choice == "N" or choice == "n":
+        	#exit message and quit
+        	print("You chose to quit. Better luck next time!")
+        	exit()
+        else:
+        	print("Make a valid choice - Y or N")
+        	choice = False
+      		 	
 
 # player_choice == False
-while player_choice is False:
+while gameVars.player_choice is False:
 	print("==============*/ RPS GAME */==============")
-	print("Computer Lives:", computer_lives, "/", total_lives)
-	print("Player Lives:", player_lives, "/", total_lives)
+	print("Computer Lives:", gameVars.computer_lives, "/", gameVars.total_lives)
+	print("Player Lives:", gameVars.player_lives, "/", gameVars.total_lives)
 	print("===========================================")
 	# Version 1, to explain array indexing
 	# player_choice = choices [1]
@@ -52,65 +48,69 @@ while player_choice is False:
 
 	print("Choose your weapon! Or type quit to exit\n")
 
-	player_choice = input("Choose rock, paper, or scissors: \n")
+	gameVars.player_choice = input("Choose rock, paper, or scissors: \n")
 	#player_choice now equals TRUE -> it has a values
 
-	if player_choice == "quit":
+	if gameVars.player_choice == "quit":
 		print("You chose to quit")
 		exit()
 
-    
+	gameVars.computer_choice = gameVars.choices[randint(0, 2)]
 
-	print("user chose "  + player_choice)
+
+	print("user chose: "  + gameVars.player_choice)
 
 	# this will be the AI choice -> a random pick from the choices array 
-	computer_choice = choices[randint(0, 2)]
 
-	print("computer chose:"  + computer_choice)
+	print("computer chose:"  + gameVars.computer_choice)
 
-	if computer_choice == player_choice:
+	if gameVars.computer_choice == gameVars.player_choice:
 		print("tie")
 
-	elif computer_choice == "rock":	
-		if player_choice == "scissors":
-			print("you lose!")
+	elif gameVars.computer_choice == "rock":	
+		if gameVars.player_choice == "scissors":
+			
 			#verbose way 
 			#player_lives = player_lives - 1
 			#simplified way
-			player_lives -= 1
+			gameVars.player_lives -= 1
+			print("you lose! player lives:", gameVars.player_lives)
 		else:
 		    print("you win!")
-		    computer_lives -= 1
+		    gameVars.computer_lives -= 1
 
-	elif computer_choice == "paper":	
-		if player_choice == "scissors":
-			print("you win!")
-			computer_lives -= 1
-		else:
-		    print("you lose!")	
-		    player_lives -= 1
-
-	elif computer_choice == "scissors":	
-		if player_choice == "paper":
-			print("you lose!")
-			player_lives -= 1
+	elif gameVars.computer_choice == "paper":	
+		if gameVars.player_choice == "rock":
+			gameVars.computer_lives -= 1
+			print("you lose! player lives:", gameVars.player_lives)
+		   
 		else:
 		    print("you win!")	
-		    computer_lives -= 1
-	if player_lives == 0:
-		winorlose("lose")
+		    gameVars.player_lives -= 1
+
+	elif gameVars.computer_choice == "scissors":	
+		if gameVars.player_choice == "paper":
+			gameVars.player_lives -= 1
+			print("you lose! player lives:", gameVars.player_lives)
+		else:
+		    print("you win!")	
+		    gameVars.computer_lives -= 1
+	if gameVars.player_lives == 0:
+		winorlose("lost")
 		
-	if computer_lives == 0:
-		winorlose("win")
+	if gameVars.computer_lives == 0:
+		winorlose("won")
+	else:
+		gameVars.player_choice = False
 		
 
 
-	print("Player lives:", player_lives)
-	print("Computer lives:", computer_lives)
+	print("Player lives:", gameVars.player_lives)
+	print("Computer lives:", gameVars.computer_lives)
 
 	# map the loop keep running, by setting player_choice back to False
 	# unset, so that our loop condition will evaluate to True
-	player_choice = False
+	gameVars.player_choice = False
 
 
 
