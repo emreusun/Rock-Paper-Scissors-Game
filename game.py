@@ -12,7 +12,7 @@ from gameComponents import gameVars, winLose
 
 # player_choice == False
 while gameVars.player_choice is False:
-	print("==============*/ RPS GAME */==============")
+	print("***1==============*/ EMRE'S RPS GAME */==============****1")
 	print("Computer Lives:", gameVars.computer_lives, "/", gameVars.total_lives)
 	print("Player Lives:", gameVars.player_lives, "/", gameVars.total_lives)
 	print("===========================================")
